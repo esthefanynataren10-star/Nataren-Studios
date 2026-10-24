@@ -1,0 +1,10 @@
+
+const menu=document.querySelector('.menu'),nav=document.querySelector('.links');function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='Menu +'}menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));nav.classList.toggle('open',open);menu.textContent=open?'Close −':'Menu +'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});document.querySelectorAll('[data-package]').forEach(a=>a.addEventListener('click',()=>{document.querySelector('#package').value=a.dataset.package}));document.querySelector('#year').textContent=new Date().getFullYear();document.querySelector('#inquiry').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);const subject='Website inquiry — '+f.get('business');const body='Name: '+f.get('name')+'\nEmail: '+f.get('email')+'\nBusiness: '+f.get('business')+'\nInterested in: '+f.get('package')+'\n\nProject details:\n'+f.get('message');const status=document.querySelector('#form-status');status.hidden=false;status.textContent='Your email draft is ready. If your email app doesn’t open, email natarenstudiosweb@hotmail.com directly. This form has not sent a message.';window.location.href='mailto:natarenstudiosweb@hotmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body)});
+
+// Reveal content only when the browser supports safe progressive enhancement.
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+ const elements=document.querySelectorAll('.section-head,.service,.featured,.step,.plan,.review-placeholder');
+ const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target);}});},{threshold:0.08});
+ elements.forEach(el=>{el.classList.add('reveal');observer.observe(el);});
+ document.documentElement.classList.add('motion-enabled');
+}
